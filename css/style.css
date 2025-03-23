@@ -66,11 +66,11 @@ body{
 .home-content .start-btn {
     width: 190px;
     height: 55px;
-    background: #6a00f4; /* Changed to match the first CSS's main button color */
+    background: #6a00f4; 
     border: 2px solid #fff;
     outline: none;
     border-radius: 6px;
-    box-shadow: 0 0 10px #6a00f4; /* Changed to match the first CSS's main button color */
+    box-shadow: 0 0 10px #6a00f4; 
     font-size: 18px;
     color: #fff;
     letter-spacing: 1px;
@@ -80,7 +80,7 @@ body{
 }
 
 .home-content .start-btn:hover{
-    background: #b854f2;  /* Changed to match the first CSS's button hover */
+    background: #b854f2;  
     box-shadow: none;
 }
 
@@ -106,7 +106,7 @@ body{
 
 .popup-info h2 {
     font-size: 50px;
-    color: #6a00f4; /* Changed to match the first CSS's title color */
+    color: #6a00f4; 
 }
 
 .popup-info .info {
@@ -167,6 +167,7 @@ body{
     align-items: center;
     position: relative;
     left: -50%;
+    /* left: 0; */
     transition: .8s ease-in-out;
     transition-delay: .25s;
     z-index: 100;
@@ -185,6 +186,17 @@ body{
     display: flex;
     flex-direction: column;
     padding: 20px 30px;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(.9);  
+}
+
+.quiz-section .quiz-box.active{
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(.9);  
+    transition: 1s ease;
+    transition-delay: 1s;
 }
 
 .quiz-box h1{
