@@ -47,7 +47,7 @@ continueBtn.onclick = () => {
         nextBtn.classList.remove('active');
 
     } else {
-        console.log('question Completed')
+        showResultBox();
     } 
   }
 
@@ -111,4 +111,33 @@ function questionCounter(index){
 function headerScore() {
     const headerScoreText = document.querySelector('.header-score');
     headerScoreText.textContent = `Score: ${userScore} / ${questions.length}`;
+}
+
+function showResultBox() {
+    quizBox.classList.remove('active');
+    resultBox.classList.add('active');
+
+    const scoreText = document.querySelector('.score-text');
+    scoreText.textContent = `Your Score ${userScore} out of ${questions.length}`;
+
+    const circularProgress = document.querySelector('.circular-progress');
+    const progressValue = document.querySelector('.progress-value');
+    
+    // Calculate the progress percentage based on user score
+    let progressStartValue = 0;
+    let progressEndValue = (userScore / questions.length) * 100;
+    
+    // Ensure the progress bar doesn't exceed 100%
+    progressEndValue = Math.min(progressEndValue, 100);
+    
+    let speed = 20; // Speed of progress bar increment
+
+    let progress = setInterval(() => {
+        if (progressStartValue < progressEndValue) {
+            progressStartValue++;
+            progressValue.textContent = `${progressStartValue}%`;
+        } else {
+            clearInterval(progress);
+        }
+    }, speed);
 }

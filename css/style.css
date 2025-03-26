@@ -188,12 +188,14 @@ body{
     opacity: 0;
     pointer-events: none;
     transform: scale(.9);  
+    transition: .3s ease;
+    transition-delay: 1s;
 }
 
 .quiz-section .quiz-box.active{
     opacity: 1;
     pointer-events: auto;
-    transform: scale(.9);  
+    transform: scale(1);  
     transition: 1s ease;
     transition-delay: 1s;
 }
@@ -315,7 +317,7 @@ body{
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(.9);
     width: 500px;
     background: transparent;
     border: 2px solid #00bfff;
@@ -326,7 +328,15 @@ body{
     align-items: center;
     opacity: 0;
     pointer-events: none;
+    transition: .3s ease;
 }
+
+.quiz-section .result-box.active{
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
 
 .result-box h2{
     font-size: 52px;
