@@ -26,10 +26,12 @@ continueBtn.onclick = () => {
 
     showQuestions(0);
     questionCounter(1);
+    // headerScore();
   }
 
   let questionCount = 0;
   let questionNumb = 1;
+  let userScore = 0;
 
   const nextBtn = document.querySelector('.next-btn');
 
@@ -67,35 +69,38 @@ function showQuestions(index){
   
 }
 
-function optionSelected(answer){
+function optionSelected(answer) {
     let userAnswer = answer.textContent;
     let correctAnswer = questions[questionCount].answer;
-    let allOptions = optionList.children.length
+    let allOptions = optionList.children.length;
 
-    if(userAnswer === correctAnswer){
+    if (userAnswer === correctAnswer) {
         answer.classList.add('correct');
     } else {
-
         answer.classList.add('incorrect');
 
         //auto select correct answer if incorrect answer is selected
-        for (let i = 0; i < allOptions; i++){
-            if(optionList.children[1].textContent == correctAnswer){
-                optionList.children[1].setAttribute('class', 'option correct');
+        for (let i = 0; i < allOptions; i++) {
+            if (optionList.children[i].textContent === correctAnswer) {
+                optionList.children[i].classList.add('correct');
             }
         }
-
     }
 
-    //disable all other options when user has selected
-    for (let i = 0; i < allOptions; i++){
-    optionList.children[i].classList.add('disabled');
+      // Disable all other options after selection
+      for (let i = 0; i < allOptions; i++) {
+        optionList.children[i].classList.add('disabled');
     }
 }
-
 
 function questionCounter(index){
     const questionTotal = document.querySelector('.question-total');
     questionTotal.textContent= `${index} of ${questions.length} Questions`;
 }
 
+
+//user score section
+// function headerScore(){
+//     const headerScoreText = document.querySelector('.header-score');
+//     headerScoreText.textContent = `score: ${userScore} / ${question.length}`;
+// }
