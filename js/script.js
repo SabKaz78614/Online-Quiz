@@ -6,6 +6,8 @@ const continueBtn = document.querySelector('.continue-btn');
 const quizSection = document.querySelector('.quiz-section');
 const quizBox = document.querySelector('.quiz-box');
 const resultBox = document.querySelector('.result-box');
+const tryAgainBtn = document.querySelector('.tryAgain-btn');
+const goHomeBtn = document.querySelector('.goHome-btn');
 
 
 
@@ -29,6 +31,33 @@ continueBtn.onclick = () => {
     questionCounter(1);
     headerScore();
   }
+
+  tryAgainBtn.onclick = () => {
+    quizBox.classList.add('active');
+    nextBtn.classList.remove('active');
+    resultBox.classList.remove('active')
+
+    questionCount = 0;
+    questionNumb = 1;
+    userScore = 0;
+    showQuestions(questionCount);
+    questionCounter(questionNumb);
+
+    headerScore();
+  
+}
+
+goHomeBtn.onclick = () => {
+    quizSection.classList.remove('active');
+    nextBtn.classList.remove('active');
+    resultBox.classList.remove('active')
+
+    questionCount = 0;
+    questionNumb = 1;
+    userScore = 0;
+    showQuestions(questionCount);
+    questionCounter(questionNumb);  
+}
 
   let questionCount = 0;
   let questionNumb = 1;
@@ -122,8 +151,6 @@ function showResultBox() {
 
     const circularProgress = document.querySelector('.circular-progress');
     const progressValue = document.querySelector('.progress-value');
-    
-    // Calculate the progress percentage based on user score
     let progressStartValue = 0;
     let progressEndValue = (userScore / questions.length) * 100;
     
@@ -132,10 +159,16 @@ function showResultBox() {
     
     let speed = 20; // Speed of progress bar increment
 
+    // Set the initial value of the circular progress
+    circularProgress.style.background = `conic-gradient(#ff69b4 ${progressStartValue}%, rgba(255, 255, 255, .1) ${progressStartValue}% 100%)`;
+
     let progress = setInterval(() => {
         if (progressStartValue < progressEndValue) {
             progressStartValue++;
             progressValue.textContent = `${progressStartValue}%`;
+
+            // Update circular progress visually
+            circularProgress.style.background = `conic-gradient(#ff69b4 ${progressStartValue}%, rgba(255, 255, 255, .1) ${progressStartValue}% 100%)`;
         } else {
             clearInterval(progress);
         }
