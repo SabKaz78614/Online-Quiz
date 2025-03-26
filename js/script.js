@@ -1,3 +1,4 @@
+// Get references to HTML elements
 const startBtn = document.querySelector('.start-btn');
 const popupInfo = document.querySelector('.popup-info');
 const exitBtn = document.querySelector('.exit-btn');
@@ -8,99 +9,136 @@ const quizBox = document.querySelector('.quiz-box');
 const resultBox = document.querySelector('.result-box');
 const tryAgainBtn = document.querySelector('.tryAgain-btn');
 const goHomeBtn = document.querySelector('.goHome-btn');
+const nextBtn = document.querySelector('.next-btn');
+const optionList = document.querySelector('.option-list');
 
+// Initialize global variables for quiz logic
+let questionCount = 0;
+let questionNumb = 1;
+let userScore = 0;
+let questions = [];
 
+// Fetch questions from the API
+async function fetchQuestions() {
+    try {
+        const response = await fetch("https://opentdb.com/api.php?amount=5&category=15&difficulty=easy&type=multiple");
+        const data = await response.json();
 
-startBtn.onclick = () => {
-    popupInfo.classList.add('active');
-    main.classList.add('active');
-}
+        // Transform the API response to match our format
+        questions = data.results.map((item) => ({
+            question: decodeHtmlEntities(item.question),
+            options: [...item.incorrect_answers.map(answer => decodeHtmlEntities(answer)), decodeHtmlEntities(item.correct_answer)].sort(() => Math.random() - 0.5), // Shuffle options
+            answer: decodeHtmlEntities(item.correct_answer)
+        }));
 
-exitBtn.onclick = () => {
-    popupInfo.classList.remove('active');
-    main.classList.remove('active');
-}
-
-continueBtn.onclick = () => {
-    quizSection.classList.add('active');
-    popupInfo.classList.remove('active');
-    main.classList.remove('active');
-    quizBox.classList.add('active');
-
-    showQuestions(0);
-    questionCounter(1);
-    headerScore();
-  }
-
-  tryAgainBtn.onclick = () => {
-    quizBox.classList.add('active');
-    nextBtn.classList.remove('active');
-    resultBox.classList.remove('active')
-
-    questionCount = 0;
-    questionNumb = 1;
-    userScore = 0;
-    showQuestions(questionCount);
-    questionCounter(questionNumb);
-
-    headerScore();
-  
-}
-
-goHomeBtn.onclick = () => {
-    quizSection.classList.remove('active');
-    nextBtn.classList.remove('active');
-    resultBox.classList.remove('active')
-
-    questionCount = 0;
-    questionNumb = 1;
-    userScore = 0;
-    showQuestions(questionCount);
-    questionCounter(questionNumb);  
-}
-
-  let questionCount = 0;
-  let questionNumb = 1;
-  let userScore = 0;
-
-  const nextBtn = document.querySelector('.next-btn');
-
-  nextBtn.onclick = () => {
-    if (questionCount < questions.length -1) {
-        questionCount++;
-        showQuestions(questionCount);
+        // Shuffle questions array to randomize the order
+        shuffleArray(questions);
         
-        questionNumb++;
+        // Show the quiz UI after fetching questions
+        startQuiz();
+    } catch (error) {
+        console.error("Error fetching quiz questions:", error);
+    }
+}
+
+// Fisher-Yates shuffle function to randomize array
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+}
+
+// Decode HTML entities (like "&quot;") to plain text
+function decodeHtmlEntities(str) {
+    const txt = document.createElement("textarea");
+    txt.innerHTML = str;
+    return txt.value;
+}
+
+// Start quiz function
+function startQuiz() {
+    startBtn.onclick = () => {
+        popupInfo.classList.add('active');
+        main.classList.add('active');
+    };
+
+    exitBtn.onclick = () => {
+        popupInfo.classList.remove('active');
+        main.classList.remove('active');
+    };
+
+    continueBtn.onclick = () => {
+        quizSection.classList.add('active');
+        popupInfo.classList.remove('active');
+        main.classList.remove('active');
+        quizBox.classList.add('active');
+
+        // Start the first question
+        showQuestions(questionCount);
         questionCounter(questionNumb);
+        headerScore();
+    };
 
+    tryAgainBtn.onclick = () => {
+        quizBox.classList.add('active');
         nextBtn.classList.remove('active');
+        resultBox.classList.remove('active');
 
-    } else {
-        showResultBox();
-    } 
-  }
+        questionCount = 0;
+        questionNumb = 1;
+        userScore = 0;
+        showQuestions(questionCount);
+        questionCounter(questionNumb);
+        headerScore();
+    };
 
-  const optionList = document.querySelector('.option-list');
-  
-//getting questions and options from array
-function showQuestions(index){
+    goHomeBtn.onclick = () => {
+        quizSection.classList.remove('active');
+        nextBtn.classList.remove('active');
+        resultBox.classList.remove('active');
+
+        questionCount = 0;
+        questionNumb = 1;
+        userScore = 0;
+        showQuestions(questionCount);
+        questionCounter(questionNumb);
+    };
+
+    nextBtn.onclick = () => {
+        if (questionCount < questions.length - 1) {
+            questionCount++;
+            showQuestions(questionCount);
+
+            questionNumb++;
+            questionCounter(questionNumb);
+
+            nextBtn.classList.remove('active');
+        } else {
+            showResultBox();
+        }
+    };
+}
+
+// Display the question and options
+function showQuestions(index) {
     const questionText = document.querySelector('.question-text');
-    questionText.textContent= `${questions[index].numb}. ${questions[index].question}`;
+    questionText.textContent = questions[index].question; // No numbers before the question
 
-    let optionTag = `<div class="option"><span>${questions[index].options[0]}</div>
-                     <div class="option"><span>${questions[index].options[1]}</div>
-                     <div class="option"><span>${questions[index].options[2]}</div>
-                     <div class="option"><span>${questions[index].options[3]}</div>`;
+    let optionTag = '';
+    questions[index].options.forEach(option => {
+        optionTag += `<div class="option"><span>${option}</span></div>`;
+    });
 
     optionList.innerHTML = optionTag;
 
-    const option = document.querySelectorAll('.option');
-    for (let i = 0; i< option.length; i++) {
-      option[i].setAttribute('onclick', 'optionSelected(this)');
-    }
-  
+    const optionElements = document.querySelectorAll('.option');
+    optionElements.forEach(option => {
+        option.setAttribute('onclick', 'optionSelected(this)');
+    });
 }
 
+// Handle option selection
 function optionSelected(answer) {
     let userAnswer = answer.textContent;
     let correctAnswer = questions[questionCount].answer;
@@ -108,7 +146,7 @@ function optionSelected(answer) {
 
     if (userAnswer === correctAnswer) {
         answer.classList.add('correct');
-        userScore += 1; 
+        userScore += 1;
         headerScore();
     } else {
         answer.classList.add('incorrect');
@@ -121,27 +159,27 @@ function optionSelected(answer) {
         }
     }
 
-
-      // Disable all other options after selection
-      for (let i = 0; i < allOptions; i++) {
+    // Disable all other options after selection
+    for (let i = 0; i < allOptions; i++) {
         optionList.children[i].classList.add('disabled');
     }
 
     nextBtn.classList.add('active');
 }
 
-function questionCounter(index){
+// Update the question counter
+function questionCounter(index) {
     const questionTotal = document.querySelector('.question-total');
-    questionTotal.textContent= `${index} of ${questions.length} Questions`;
+    questionTotal.textContent = `${index} of ${questions.length} Questions`;
 }
 
-
-//user score section
+// Update the score header
 function headerScore() {
     const headerScoreText = document.querySelector('.header-score');
     headerScoreText.textContent = `Score: ${userScore} / ${questions.length}`;
 }
 
+// Show result box when quiz is finished
 function showResultBox() {
     quizBox.classList.remove('active');
     resultBox.classList.add('active');
@@ -153,10 +191,10 @@ function showResultBox() {
     const progressValue = document.querySelector('.progress-value');
     let progressStartValue = 0;
     let progressEndValue = (userScore / questions.length) * 100;
-    
+
     // Ensure the progress bar doesn't exceed 100%
     progressEndValue = Math.min(progressEndValue, 100);
-    
+
     let speed = 20; // Speed of progress bar increment
 
     // Set the initial value of the circular progress
@@ -174,3 +212,7 @@ function showResultBox() {
         }
     }, speed);
 }
+
+// Fetch the questions and start the quiz
+fetchQuestions();
+
