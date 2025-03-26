@@ -5,6 +5,7 @@ const main = document.querySelector('.main');
 const continueBtn = document.querySelector('.continue-btn');
 const quizSection = document.querySelector('.quiz-section');
 const quizBox = document.querySelector('.quiz-box');
+const resultBox = document.querySelector('.result-box');
 
 
 
@@ -26,7 +27,7 @@ continueBtn.onclick = () => {
 
     showQuestions(0);
     questionCounter(1);
-    // headerScore();
+    headerScore();
   }
 
   let questionCount = 0;
@@ -42,6 +43,8 @@ continueBtn.onclick = () => {
         
         questionNumb++;
         questionCounter(questionNumb);
+
+        nextBtn.classList.remove('active');
 
     } else {
         console.log('question Completed')
@@ -76,10 +79,12 @@ function optionSelected(answer) {
 
     if (userAnswer === correctAnswer) {
         answer.classList.add('correct');
+        userScore += 1; 
+        headerScore();
     } else {
         answer.classList.add('incorrect');
 
-        //auto select correct answer if incorrect answer is selected
+        // Auto-select correct answer if incorrect answer is selected
         for (let i = 0; i < allOptions; i++) {
             if (optionList.children[i].textContent === correctAnswer) {
                 optionList.children[i].classList.add('correct');
@@ -87,10 +92,13 @@ function optionSelected(answer) {
         }
     }
 
+
       // Disable all other options after selection
       for (let i = 0; i < allOptions; i++) {
         optionList.children[i].classList.add('disabled');
     }
+
+    nextBtn.classList.add('active');
 }
 
 function questionCounter(index){
@@ -100,7 +108,7 @@ function questionCounter(index){
 
 
 //user score section
-// function headerScore(){
-//     const headerScoreText = document.querySelector('.header-score');
-//     headerScoreText.textContent = `score: ${userScore} / ${question.length}`;
-// }
+function headerScore() {
+    const headerScoreText = document.querySelector('.header-score');
+    headerScoreText.textContent = `Score: ${userScore} / ${questions.length}`;
+}

@@ -293,12 +293,114 @@ body{
     color: rgba(255, 255, 255, .3);
     font-weight: 600;
     cursor: pointer;
-    transition: background-image 0.3s ease, border-color 0.3s ease; 
+    pointer-events: none;
+    transition: 0.5s; 
 }
 
-.quiz-footer .next-btn:hover {
+.quiz-footer .next-btn.active{
+    pointer-events: auto;
+    border-color: #ff69b4; 
+    color: white;
+}
+
+.quiz-footer .next-btn.active:hover {
     background: linear-gradient(to right, #4b0082, #ff69b4);
     border-color: #ff69b4; 
     color: white;
     box-shadow: 0 0 10px #ff69b4; 
+    transition: 0.3s;
+}
+
+.quiz-section .result-box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background: transparent;
+    border: 2px solid #00bfff;
+    border-radius: 6px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.result-box h2{
+    font-size: 52px;
+}
+
+.result-box .percentage-container{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 40px;
+}
+
+.percentage-container .circular-progress{
+    position: relative;
+    width: 250px;
+    height: 250px;
+    background: conic-gradient(#ff69b4, 3.6deg, rgba(255, 255, 255, .1) 0deg);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+
+.percentage-container .circular-progress::before{
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    background: #00bfff;
+    border-radius: 50%;
+}
+
+.circular-progress .progress-value{
+    font-size: 45px;
+    font-weight: 500;
+    position: relative;
+}
+
+.percentage-container .score-text{
+    font-size: 26px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.result-box .buttons{
+    display: flex;
+}
+
+.buttons button{
+    width: 130px;
+    height: 47px;
+    background: linear-gradient(to right, #4b0082, #ff69b4);
+    border-color: #ff69b4; 
+    outline: none;
+    border-radius: 6px;
+    font-size: 16px;
+    margin: 0 20px 20px;
+    color: white;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.buttons button:nth-child(1):hover{
+    background: transparent;
+    color: #ff69b4;
+}
+
+.buttons button:nth-child(2){
+    background: transparent;
+    color: #ff69b4; ;
+}
+
+.buttons button:nth-child(2):hover{
+    background: linear-gradient(to right, #4b0082, #ff69b4);
+    color: white;
 }
