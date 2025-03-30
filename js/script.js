@@ -21,7 +21,7 @@ let questions = [];
 // Fetch questions from the API
 async function fetchQuestions() {
     try {
-        const response = await fetch("https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple");
+        const response = await fetch("https://opentdb.com/api.php?amount=5&category=15&difficulty=easy&type=multiple");
         const data = await response.json();
 
         // Transform the API response to match our format
@@ -180,6 +180,7 @@ function headerScore() {
 }
 
 // Show result box when quiz is finished
+
 function showResultBox() {
     quizBox.classList.remove('active');
     resultBox.classList.add('active');
@@ -189,18 +190,24 @@ function showResultBox() {
 
     const circularProgress = document.querySelector('.circular-progress');
     const progressValue = document.querySelector('.progress-value');
+
     let progressStartValue = 0;
     let progressEndValue = (userScore / questions.length) * 100;
 
-    // Ensure the progress bar doesn't exceed 100%
+    // Ensure the progress bar doesn't exceed 100% and reset it properly
     progressEndValue = Math.min(progressEndValue, 100);
+    progressValue.textContent = `0%`; // Reset the text value immediately
+
+    // Clear any existing progress animation
+    clearInterval(window.progressInterval);
 
     let speed = 20; // Speed of progress bar increment
 
-    // Set the initial value of the circular progress
-    circularProgress.style.background = `conic-gradient(#ff69b4 ${progressStartValue}%, rgba(255, 255, 255, .1) ${progressStartValue}% 100%)`;
+    // Reset the circular progress before animation
+    circularProgress.style.background = `conic-gradient(#ff69b4 0%, rgba(255, 255, 255, .1) 0% 100%)`;
 
-    let progress = setInterval(() => {
+    // Start progress animation
+    window.progressInterval = setInterval(() => {
         if (progressStartValue < progressEndValue) {
             progressStartValue++;
             progressValue.textContent = `${progressStartValue}%`;
@@ -208,7 +215,7 @@ function showResultBox() {
             // Update circular progress visually
             circularProgress.style.background = `conic-gradient(#ff69b4 ${progressStartValue}%, rgba(255, 255, 255, .1) ${progressStartValue}% 100%)`;
         } else {
-            clearInterval(progress);
+            clearInterval(window.progressInterval);
         }
     }, speed);
 }
