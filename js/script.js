@@ -21,7 +21,7 @@ let questions = [];
 // Fetch questions from the API
 async function fetchQuestions() {
     try {
-        const response = await fetch("https://opentdb.com/api.php?amount=5&category=15&difficulty=easy&type=multiple");
+        const response = await fetch("https://opentdb.com/api.php?amount=10&category=31&difficulty=easy&type=multiple");
         const data = await response.json();
 
         // Transform the API response to match our format
