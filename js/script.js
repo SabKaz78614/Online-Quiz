@@ -80,17 +80,20 @@ function startQuiz() {
         headerScore();
     };
 
-    tryAgainBtn.onclick = () => {
-        quizBox.classList.add('active');
-        nextBtn.classList.remove('active');
-        resultBox.classList.remove('active');
+    tryAgainBtn.onclick = async () => {
+    quizBox.classList.add('active');
+    nextBtn.classList.remove('active');
+    resultBox.classList.remove('active');
 
-        questionCount = 0;
-        questionNumb = 1;
-        userScore = 0;
-        showQuestions(questionCount);
-        questionCounter(questionNumb);
-        headerScore();
+    questionCount = 0;
+    questionNumb = 1;
+    userScore = 0;
+
+    await fetchQuestions(); // Fetch new questions when retrying
+
+    showQuestions(questionCount);
+    questionCounter(questionNumb);
+    headerScore();
     };
 
     goHomeBtn.onclick = () => {
