@@ -95,4 +95,5 @@ The quiz questions are fetched from the Open Trivia Database API. The app fetche
 
 3. Open `index.html` in your browser to run the quiz.
 
-
+## Live Site
+https://sabkaz78614.github.io/Online-Quiz/
