@@ -414,3 +414,96 @@ body{
     background: linear-gradient(to right, #4b0082, #ff69b4);
     color: white;
 }
+
+/* Responsive Style Home Section */
+
+@media (max-width: 768px) {
+
+    .home-content {
+        max-width: 350px;
+        margin-left: -15%;
+    }
+
+    .home-content h1 {
+        font-size: 30px;
+    }
+
+    .home-content p {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .home-content .start-btn {
+        width: 90px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .quiz-section {
+        left: -90%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .home-content {
+        max-width: 300px;
+        margin-left: 0%;
+       
+    }
+}
+
+@media (max-width: 485px) {
+    .home-content {
+        margin-left: -30%;
+    }
+}
+
+@media (max-width: 375px) {
+
+    .home-content {
+        max-width: 200px;
+        margin-left: -75%;
+    }
+
+    .home-content h1 {
+        font-size: 25px;
+    }
+
+    .home-content p {
+        font-size: 12px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 320px) {
+
+    .home-content {
+        margin-left: -140%;
+    }
+}
+
+@media (max-width: 296px) {
+
+    .home-content {
+        margin-left: -200%;
+    }
+
+    .quiz-section {
+        left: -100%;
+    }
+}
+
+@media (max-width: 270px) {
+
+    .home-content {
+        margin-left: -250%;
+    }
+}
+
+@media (max-width: 258px) {
+
+    .home-content {
+        margin-left: -275%;
+    }
+}

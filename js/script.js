@@ -223,3 +223,15 @@ function showResultBox() {
 // Fetch the questions and start the quiz
 fetchQuestions();
 
+
+
+window.addEventListener('wheel', function(event) {
+    event.preventDefault(); // Stops the scroll event
+}, { passive: false }); // Use passive: false to allow preventDefault
+
+// Prevent scrolling using keyboard keys (arrow keys, space bar, etc.)
+window.addEventListener('keydown', function(event) {
+    if (['ArrowDown', 'ArrowUp', 'Space'].includes(event.key)) {
+        event.preventDefault(); // Prevent the key from scrolling
+    }
+});
