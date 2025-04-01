@@ -227,7 +227,7 @@ function showResultBox() {
 fetchQuestions();
 
 
-
+// prevent scrolling on the page
 window.addEventListener('wheel', function(event) {
     event.preventDefault(); // Stops the scroll event
 }, { passive: false }); // Use passive: false to allow preventDefault
