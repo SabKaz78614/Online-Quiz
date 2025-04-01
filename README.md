@@ -30,6 +30,14 @@ The quiz questions are fetched from the Open Trivia Database API. The app fetche
 ### 3. Preventing Scroll and Inputs
 - The app prevents scrolling via mouse, trackpad, and keyboard arrow keys/space bar while the quiz is active to provide a focused experience.
 
+### 4. Button Control
+- Buttons in Quiz such as next button is not active and will only be highlighted or active when an option from answer is selected.
+
+![Quiz Screenshot](./assets/readme/inactive.png)
+
+![Quiz Screenshot](./assets/readme/active.png)
+
+
 ## Features
 
 - Fetches random quiz questions from the [Open Trivia Database API](https://opentdb.com/).
