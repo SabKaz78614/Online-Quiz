@@ -18,43 +18,37 @@ let questionNumb = 1;
 let userScore = 0;
 let questions = [];
 
-// Fetch questions from the API
+// Fetch questions from the API and start the quiz
 async function fetchQuestions() {
     try {
         const response = await fetch("https://opentdb.com/api.php?amount=3&category=15&difficulty=easy&type=multiple");
         const data = await response.json();
 
-        // Transform the API response to match our format
-        questions = data.results.map((item) => ({
-            question: decodeHtmlEntities(item.question),
-            options: [...item.incorrect_answers.map(answer => decodeHtmlEntities(answer)), decodeHtmlEntities(item.correct_answer)].sort(() => Math.random() - 0.5), // Shuffle options
-            answer: decodeHtmlEntities(item.correct_answer)
-        }));
+        // Process questions
+        questions = data.results.map(item => {
+            let options = [...item.incorrect_answers, item.correct_answer]; // Add correct answer to options
+            options.sort(() => Math.random() - 0.5); // Shuffle options
 
-        // Shuffle questions array to randomize the order
-        shuffleArray(questions);
-        
-        // Show the quiz UI after fetching questions
-        startQuiz();
+            return {
+                question: decodeHtml(item.question),
+                options: options.map(decodeHtml), // Decode all options
+                answer: decodeHtml(item.correct_answer)
+            };
+        });
+
+        startQuiz(); // Start the quiz after fetching questions
     } catch (error) {
-        console.error("Error fetching quiz questions:", error);
+        console.error("Error fetching questions:", error);
     }
 }
 
-// Fisher-Yates shuffle function to randomize array
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
-    }
+// Function to decode HTML entities
+function decodeHtml(text) {
+    let textarea = document.createElement("textarea");
+    textarea.innerHTML = text;
+    return textarea.value;
 }
 
-// Decode HTML entities (like "&quot;") to plain text
-function decodeHtmlEntities(str) {
-    const txt = document.createElement("textarea");
-    txt.innerHTML = str;
-    return txt.value;
-}
 
 // Start quiz function
 function startQuiz() {

@@ -6,67 +6,62 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Website</title>
+    
     <!-- Google Fonts and CSS Links -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/responsive.css">
 </head>
 
 <body>
-
     <main class="main">
-        
         <div class="container">
+            
+            <!-- Quiz Section -->
             <section class="quiz-section">
                 <div class="quiz-box">
                     <h1>Online Quiz</h1>
+                    
+                    <!-- Quiz Header -->
                     <div class="quiz-header">
                         <span>Quiz Website</span>
                         <span class="header-score">Score: 0 / 3</span>
                     </div>
-
+                    
+                    <!-- Question Display -->
                     <h2 class="question-text">Which of the following is used to style the appearance of a webpage?</h2>
                     
-                    <div class="option-list">
-                        <!-- <div class="option">
-                            <span>A. HTML</span>
-                        </div>
-                        <div class="option">
-                            <span>B. CSS</span>
-                        </div>
-                        <div class="option">
-                            <span>C. JavaScript</span>
-                        </div>
-                        <div class="option">
-                            <span>D. Python</span>
-                        </div> -->
-                    </div>
-
+                    <!-- Options List -->
+                    <div class="option-list"></div>
+                    
+                    <!-- Quiz Footer -->
                     <div class="quiz-footer">
                         <span class="question-total"> 1 of 3 Questions</span>
                         <button class="next-btn">Next</button>
-                    </div>
-                
+                    </div>                
                 </div>
-
+                
+                <!-- Quiz Result Box -->
                 <div class="result-box">
                     <h2>Quiz Result!</h2>
                     <div class="percentage-container">
                       <div class="circular-progress">
                         <span class="progress-value">0%</span>
                       </div>
-                        <span class="score-text">Your Score 0 out of 3</span>
+                      <span class="score-text">Your Score 0 out of 3</span>
                     </div>
                     
+                    <!-- Result Buttons -->
                     <div class="buttons">
                       <button class="tryAgain-btn">Try Again</button>
                       <button class="goHome-btn">Go To Home</button>
                     </div>
                 </div>
-
             </section>
-
+            
+            <!-- Home Section -->
             <section class="home">
                 <div class="home-content">
                     <h1>Quiz Website</h1>
@@ -78,25 +73,23 @@
         </div>
     </main>
 
+    <!-- Popup Quiz Guide -->
     <div class="popup-info">
         <h2>Quiz Guide</h2>
         <span class="info">1. Click Start to begin or Exit to leave.</span>
-
         <span class="info">2. Each question has 4 options. Correct answers turn green, wrong ones red. Your score updates as you go.</span>
-
-        <span class="info">3. Click Nect after selecting the answer to proceed. Answers cannot be changed once selected.</span>
-
+        <span class="info">3. Click Next after selecting the answer to proceed. Answers cannot be changed once selected.</span>
         <span class="info">4. Your score will update as you answer correctly along with a circular progress bar to show total percentage that is correct.</span>
-
         <span class="info">5. Click Try Again to restart or Go Home to exit. New questions load each time.</span>
         
+        <!-- Guide Buttons -->
         <div class="btn-group">
           <button class="info-btn exit-btn">Exit Quiz</button>
           <a href="#" class="info-btn continue-btn">Continue</a>
         </div>
-      </div>
+    </div>
 
-
+    <!-- JavaScript File Link -->
     <script src="./js/script.js"></script>
 </body>
 
