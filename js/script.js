@@ -21,7 +21,7 @@ let questions = [];
 // Fetch questions from the API and start the quiz
 async function fetchQuestions() {
     try {
-        const response = await fetch("https://opentdb.com/api.php?amount=3&category=15&difficulty=easy&type=multiple");
+        const response = await fetch("https://opentdb.com/api.php?amount=8&category=15&difficulty=easy&type=multiple");
         const data = await response.json();
 
         // Process questions
